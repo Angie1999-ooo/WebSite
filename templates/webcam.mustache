@@ -1,0 +1,41 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+</head>
+<body>
+<button onclick="cameraOn()">start camera</button>
+<video id="webcam" autoplay playsinline width="640" height="480"></video>
+<canvas id="canvas" class="d-none"></canvas>
+<button  onclick="takePicture()">take picture</button>
+<button onclick="cameraOn()">stop camera</button>
+<a href="#" id="download-photo" download > Скачать</a>
+</body>
+<script>
+    const webcamElement = document.getElementById('webcam');
+    const canvasElement = document.getElementById('canvas');
+    const webcam = new Webcam(webcamElement, 'user', canvasElement);
+    var newTab = window.open();
+
+
+
+    function takePicture(){
+        let picture = webcam.snap();
+        document.querySelector('#download-photo').href = picture;
+
+        webcam.stop();
+    }
+    function cameraOn(){
+        webcam.start()
+                .then(result =>{
+                    console.log("webcam started");
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+    }
+    function stopCam(){
+        webcam.stop();
+    }
+</script>
+<a href="/main" > Вернуться к настройкам</a>
+</html>
